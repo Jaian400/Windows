@@ -1,23 +1,30 @@
 from skimage import io, color, filters, transform
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import os
+from datetime import datetime
 # from tensorflow import keras
 # from keras.constraints import maxnorm
 # from keras.utils import np_utils
 
-images = [a for a in os.path('images')]
+from load_images import load_images
+
+columns = ["Image", "Date", "Time"]
+images = pd.DataFrame(load_images(), columns=columns)
+
+print(images)
 
 # LOADING A TEST PICTURE
-image = io.imread("IMG_20250129_002603.jpg")
+# image = io.imread("IMG_20250129_002603.jpg")
 
 # pixel_value = image[50, 100]
 # print("Wartość piksela na (50, 100):", pixel_value)
 
 # MAKING AN IMAGE GREY
-gray_image = color.rgb2gray(image)
+gray_image = color.rgb2gray(images.iloc[0, 0])
 
-hsv_image = color.rgb2hsv(image)
+hsv_image = color.rgb2hsv(images.iloc[0, 0])
 brightness = hsv_image[:, :, 2]
 
 threshold = 0.4
