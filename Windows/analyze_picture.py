@@ -10,13 +10,10 @@ from datetime import datetime
 
 from load_images import load_images
 
-columns = ["Image", "Date", "Time"]
-images = pd.DataFrame(load_images(), columns=columns)
+# COLUMNS: Image in skimage format, date in %Y%m%d, time in %H%M%S
+images = load_images()
 
-print(images)
-
-# LOADING A TEST PICTURE
-# image = io.imread("IMG_20250129_002603.jpg")
+print(images.head(10))
 
 # pixel_value = image[50, 100]
 # print("Wartość piksela na (50, 100):", pixel_value)
