@@ -3,7 +3,7 @@ from skimage import io, color, filters, transform
 from datetime import datetime
 import pandas as pd
 
-folder_path = "images"
+folder_path = "../data/raw"
 
 def extract_date_and_time(image_path):
     filename = os.path.basename(image_path)
