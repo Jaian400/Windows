@@ -36,6 +36,6 @@ def load_images():
 
             if date and time:
                 image = io.imread(image_path)
-                data.loc[len(data)] = [image, date, time]
+                data.append([image, date, time])
 
     return data
