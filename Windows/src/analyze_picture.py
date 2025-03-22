@@ -4,9 +4,9 @@ import numpy as np
 import pandas as pd
 import os
 from datetime import datetime
-# from tensorflow import keras
-# from keras.constraints import maxnorm
-# from keras.utils import np_utils
+from tensorflow import keras
+from keras.constraints import maxnorm
+from keras.utils import np_utils
 
 from load_images import load_images
 

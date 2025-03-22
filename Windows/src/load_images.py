@@ -1,9 +1,20 @@
 import os
-from skimage import io, color, filters, transform
+import logging
+from skimage import io, color, transform
 from datetime import datetime
 import pandas as pd
 
-folder_path = "../data/raw"
+LOGS_DIR = "../logs"
+os.makedirs(LOGS_DIR, exist_ok=True)
+
+logging.basicConfig(
+    filename=os.path.join(LOGS_DIR, "app.log"),
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
+
+FOLDER_PATH = "../data/raw"
+IMAGE_SIZE = (256, 256)
 
 def extract_date_and_time(image_path):
     filename = os.path.basename(image_path)
@@ -29,13 +40,15 @@ def load_images():
     columns = ["Image", "Date", "Time"]
     data = pd.DataFrame(columns=columns)
 
-    for filename in os.listdir(folder_path):
+    for filename in os.listdir(FOLDER_PATH):
         if filename.endswith('.jpg') or filename.endswith('.png'):
-            image_path = os.path.join(folder_path, filename)
+            image_path = os.path.join(FOLDER_PATH, filename)
             date, time = extract_date_and_time(image_path)
 
             if date and time:
                 image = io.imread(image_path)
-                data.append([image, date, time])
+                image = transform.resize(image, IMAGE_SIZE, anti_aliasing=True)
+                data.loc[len(data)] = [image, date, time]
 
+    logging.info(f"Loaded {len(data)} images successfully.")
     return data
